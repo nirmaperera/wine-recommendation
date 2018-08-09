@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ewgb#8*fz(0ihb-vp0c789-2$!=)8_3yo880su_wba!p#-=bo+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django-env.ccav2acaer.us-east-1.elasticbeanstalk.com', '127.0.0.1']
 
 
 # Application definition
@@ -83,16 +83,28 @@ DATABASES = {
     }
 }
 """
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd8mmi7prscqph',
-        'USER': 'aiknxbadokeomx',
-        'PASSWORD': '38f2a291689be6b75d923869e528277dda01867c759021c7c4f18ca948d9adda',
-        'HOST': 'ec2-23-23-220-19.compute-1.amazonaws.com',
-        'PORT': '5432',
+if 'RDS_DB_NAME' in os.environ:     
+     DATABASES = {         
+         'default': {             
+            'ENGINE': 'django.db.backends.mysql',              
+            'NAME': os.environ['RDS_DB_NAME'],             
+            'USER': os.environ['RDS_USERNAME'],             
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],             
+            'PORT': os.environ['RDS_PORT'],         
+         }     
+     } 
+else: 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'd8mmi7prscqph',
+            'USER': 'aiknxbadokeomx',
+            'PASSWORD': '38f2a291689be6b75d923869e528277dda01867c759021c7c4f18ca948d9adda',
+            'HOST': 'ec2-23-23-220-19.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
     }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
