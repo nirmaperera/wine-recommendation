@@ -50,7 +50,7 @@ function NavBar() {
             " ",
             React.createElement(
               "a",
-              { href: "../index" },
+              { href: "../" },
               "  Log Out    "
             )
           )
